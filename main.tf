@@ -50,7 +50,7 @@ resource "aws_instance" "blog" {
 
 module "alb" {
   source = "terraform-aws-modules/alb/aws"
-  
+
   name    = "blog-alb"
 
   vpc_id  = module.blog_vpc.vpc_id
@@ -72,13 +72,16 @@ module "alb" {
     }
   ]
 
-  http_tcp_listeners = [
-    {
-      port                = 80
-      protocol            = "HTTP"
-      target_group_index  = 0
+  listeners = {
+    ex-http-https-redirect = {
+      port     = 80
+      protocol = "HTTP"
+      redirect = {
+        port        = "443"
+        protocol    = "HTTPS"
+        status_code = "HTTP_301"
+      }
     }
-  ]
 
   tags = {
     Environment = "Dev"
