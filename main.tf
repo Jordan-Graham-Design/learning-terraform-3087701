@@ -50,6 +50,7 @@ resource "aws_instance" "blog" {
 
 module "alb" {
   source = "terraform-aws-modules/alb/aws"
+  version = "~>6.0"
 
   name    = "blog-alb"
 
@@ -72,13 +73,13 @@ module "alb" {
     }
   ]
 
-  #http_tcp_listeners = [
-  #  {
-  #    port                = 80
-  #    protocol            = "HTTP"
-  #    target_group_index  = 0
-  #  }
-  #]
+  http_tcp_listeners = [
+    {
+      port                = 80
+      protocol            = "HTTP"
+      target_group_index  = 0
+    }
+  ]
 
   tags = {
     Environment = "Dev"
