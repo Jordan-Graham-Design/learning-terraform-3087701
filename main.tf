@@ -82,6 +82,7 @@ module "alb" {
         status_code = "HTTP_301"
       }
     }
+  }
 
   tags = {
     Environment = "Dev"
